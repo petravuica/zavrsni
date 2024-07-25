@@ -1,0 +1,11 @@
+<!-- survey_result.html -->
+{% extends 'app/base.html' %}
+
+{% block title %}Rezultat Anketiranja{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Rezultat Anketiranja</h2>
+    <p class="text-center">Vjerojatnost oboljenja: {{ risk_probability|floatformat:2 }}%</p>
+  </div>
+{% endblock %}

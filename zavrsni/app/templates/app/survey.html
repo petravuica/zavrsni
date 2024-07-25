@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Anketa{% endblock %}
+
+{% block content %}
+  <div class="container mt-5 survey-container">
+    <h2 class="text-center mb-4">Popunite anketu</h2>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">Pošalji</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

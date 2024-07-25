@@ -1,0 +1,64 @@
+/* General styles */
+body {
+    background-color: #faf8f8;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar-brand, .nav-link {
+    color: #000000 !important;
+}
+
+.navbar-brand:hover, .nav-link:hover {
+    color: #d4d4d4 !important;
+}
+
+/* Survey container */
+.survey-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form elements */
+.survey-container h2 {
+    color: #343a40;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    
+}
+
+.form-check-label, .form-control {
+    font-size: 1rem;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+.footer {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
