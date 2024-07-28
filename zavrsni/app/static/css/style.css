@@ -1,4 +1,4 @@
-/* General styles */
+/* Opći stilovi */
 body {
     background-color: #faf8f8;
     font-family: 'Roboto', sans-serif;
@@ -23,29 +23,61 @@ body {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Maksimalna širina */
+    margin: 0 auto; /* Centriranje */
 }
 
-/* Form elements */
+/* Naslov ankete */
 .survey-container h2 {
     color: #343a40;
 }
 
+/* Form elementi */
 .form-group {
     margin-bottom: 1.5rem;
-    
 }
 
 .form-check-label, .form-control {
     font-size: 1rem;
+    
+}
+.form-group div div{ 
+    color: #343a40;
+    display: inline-block;
+    margin: auto;
+    margin-left: 10px;
+}
+.asteriskField{
+    color: #ffffff;
+}
+/* Povećanje veličine inputa i labela */
+.form-check-input {
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
-.form-check-input {
+/* Horizontalni radio buttoni */
+.horizontal-radio ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.horizontal-radio li {
+    display: inline-block;
     margin-right: 10px;
 }
 
+/* Stilizacija gumba */
 .btn-primary {
     background-color: #007bff;
     border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn-primary:hover {

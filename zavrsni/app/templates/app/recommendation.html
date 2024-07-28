@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% block title %}Preporuka{% endblock %}
+
+{% block content %}
+  <div class="container mt-5 recommendation-container">
+    <h2 class="text-center mb-4">Vaša preporuka</h2>
+    <p class="text-center">{{ recommendation }}</p>
+    <div class="text-center mt-4">
+      <a href="{% url 'home' %}" class="btn btn-primary">Povratak na početnu stranicu</a>
+    </div>
+    
+  </div>
+{% endblock %}

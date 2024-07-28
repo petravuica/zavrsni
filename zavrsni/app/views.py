@@ -1,11 +1,11 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from .forms import RegistrationForm, SurveyForm
 from .models import Patient, Doctor, SurveyResponse
 from django.contrib.auth import login
 from django.http import HttpResponseRedirect, HttpResponse
-from .utils import map_answers_to_values
-from .model import predict_risk
+from .utils import map_answers_to_values, generate_recommendation
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -55,13 +55,26 @@ def SurveyView(request):
 
             survey_response.save()
             
-            return redirect(reverse('home'))
+            # generiranje preporuke
+            recommendation = generate_recommendation(survey_response)
+
+            return render(request, 'app/recommendation.html', {'recommendation': recommendation})
+
+            # return redirect(reverse('home'))
     else:
         form = SurveyForm()
     return render(request, 'app/survey.html', {'form': form})
 
 
+@login_required
+def patient_profile(request):
+    patient = get_object_or_404(Patient, user=request.user)
+    survey_responses = SurveyResponse.objects.filter(user=request.user).order_by('-date')
 
+    context = {
+        'patient': patient,
+        'survey_responses': survey_responses,
+    }
 
-
+    return render(request, 'app/patient_profile.html', context)
 

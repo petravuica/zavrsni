@@ -23,4 +23,7 @@ urlpatterns = [
     path('accounts/register', views.RegisterView, name='register'),
     path("accounts/", include("django.contrib.auth.urls")),
     path('survey/', views.SurveyView, name='survey'), 
+    path('result/', views.SurveyView, name='result'),
+   
+    
 ]

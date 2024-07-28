@@ -33,7 +33,7 @@ class RegistrationForm(UserCreationForm):
             self.add_error(None, "This email address is already taken.")
         return email
 
-class SurveyForm(forms.ModelForm):
+class SurveyForm(forms.ModelForm): 
     class Meta:
         model = SurveyResponse
         fields = [
@@ -79,6 +79,7 @@ class SurveyForm(forms.ModelForm):
             'stress': forms.RadioSelect,
             'appetite_loss': forms.RadioSelect,
         }
+
         labels = {
             'therapy': 'Primate li terapiju?',
             'age': 'Koliko imate godina?',
@@ -105,5 +106,5 @@ class SurveyForm(forms.ModelForm):
             super(SurveyForm, self).__init__(*args, **kwargs)
             for field_name, field in self.fields.items():
                 if isinstance(field.widget, forms.RadioSelect):
-                    field.choices = field.choices[1:]
+                    field.empty_label = None
 

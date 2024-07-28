@@ -8,6 +8,8 @@ VALUE_MAP = {
     'Nikad': 1,
     'Da': 5,
     'Ne': 0,
+    'M': 1,
+    'Ž' : 0
 }
 
 def map_answers_to_values(survey_response):
@@ -34,3 +36,39 @@ def map_answers_to_values(survey_response):
         'appetite_loss': VALUE_MAP.get(survey_response.appetite_loss, 0),
     }
     return values
+
+def simple_risk_assessment(values):
+    score = (
+        values['therapy'] +
+        values['smoking'] +
+        values['alcohol'] +
+        values['heartburn'] +
+        values['chest_pain'] +
+        values['dysphagia'] +
+        values['h_pylori'] +
+        values['nsaids'] +
+        values['abdominal_pain'] +
+        values['nausea_vomiting'] +
+        values['postprandial_pain'] +
+        values['diarrhea'] +
+        values['cramps'] +
+        values['fatigue_anemia'] +
+        values['urgency'] +
+        values['weight_loss'] +
+        values['stress'] +
+        values['appetite_loss']
+    )
+
+    # Definiši granice rizika
+    if score >= 70:
+        return "Imate jako velike mogućnosti, javite se lječniku što prije"
+    elif score >= 35:
+        return "Imate mogućnosti, pratite simptome"
+    else:
+        return "Nemate nikakav rizik"
+
+def generate_recommendation(survey_response):
+    values = map_answers_to_values(survey_response)
+    recommendation = simple_risk_assessment(values)
+    return recommendation
+
