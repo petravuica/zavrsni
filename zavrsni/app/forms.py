@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient,Doctor, SurveyResponse
+from .models import Patient, Doctor, SurveyResponse, Message
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -11,11 +11,13 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder': 'Email'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Confirm password'}))
+    gender = forms.ChoiceField(choices=[('M', 'Muški'), ('F', 'Ženski') ], widget=forms.RadioSelect)
+    dateOfBirth = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
     isDoctor = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-check-input', }), required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'firstName', 'lastName', 'email', 'password1', 'password2', 'isDoctor']
+        fields = ['username', 'firstName', 'lastName', 'email', 'password1', 'password2', 'gender', 'dateOfBirth', 'isDoctor']
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -38,8 +40,6 @@ class SurveyForm(forms.ModelForm):
         model = SurveyResponse
         fields = [
             'therapy',
-            'age',
-            'gender',
             'smoking',
             'alcohol',
             'heartburn',
@@ -60,7 +60,6 @@ class SurveyForm(forms.ModelForm):
         ]
         widgets = {
             'therapy': forms.RadioSelect,
-            'gender': forms.RadioSelect,
             'smoking': forms.RadioSelect,
             'alcohol': forms.RadioSelect,
             'heartburn': forms.RadioSelect,
@@ -82,8 +81,6 @@ class SurveyForm(forms.ModelForm):
 
         labels = {
             'therapy': 'Primate li terapiju?',
-            'age': 'Koliko imate godina?',
-            'gender': 'Spol',
             'smoking': 'Konzumirate li cigarete?',
             'alcohol': 'Konzumirate li alkohol?',
             'heartburn': 'Imate li osjećaj žgaravice (osjećaj vraćanja kisele tekućine u grlo ili usta)?',
@@ -107,4 +104,10 @@ class SurveyForm(forms.ModelForm):
             for field_name, field in self.fields.items():
                 if isinstance(field.widget, forms.RadioSelect):
                     field.empty_label = None
-
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Unesite poruku ovdje...'}),
+        }

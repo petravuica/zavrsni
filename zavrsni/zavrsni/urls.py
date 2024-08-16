@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app import views
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
@@ -24,6 +26,9 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('survey/', views.SurveyView, name='survey'), 
     path('result/', views.SurveyView, name='result'),
+    path('patient_profile/', views.patient_profile, name='patient_profile'),
+    path('patients/', views.patient_list, name='patient_list'),
+    path('patients/<int:patient_id>/', views.PatientDetail, name='patient_detail'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
    
     
-]

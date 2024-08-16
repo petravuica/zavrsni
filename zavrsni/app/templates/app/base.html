@@ -9,21 +9,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Probavni sustav{% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
+    <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="{% url 'home' %}">Probavni sustav</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="">Profil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'survey' %}">Anketa</a>
-                </li>
+                    {% if user_type == 'patient' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'patient_profile' %}">Profil</a>
+                        </li>
+                    {% endif %}
+                    {% if user_type == 'doctor' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'patient_list' %}">Zdravstveni kartoni</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'survey' %}">Anketa</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Odjava</a>
                     </li>
@@ -38,12 +51,13 @@
             </ul>
         </div>
     </nav>
-
+    
     <div class="container">
         {% block content %}{% endblock %}
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 </body>
 </html>

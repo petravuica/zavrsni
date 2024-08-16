@@ -1,0 +1,28 @@
+{% extends "app/base.html" %}
+{% block title %}Popis pacijenata{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Popis pacijenata</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for patient in patients %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{% url 'patient_detail' patient.id %}" class="text-decoration-none text-dark">
+                                    <strong>{{ patient.name }}</strong> - {{ patient.user.first_name}} {{ patient.user.last_name }}
+                                </a>
+                                
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

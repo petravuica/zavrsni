@@ -1,96 +1,247 @@
-/* Opći stilovi */
 body {
-    background-color: #faf8f8;
+    background-color: rgba(255, 235, 238, 1); /* Svijetlo siva pozadina za bolju čitljivost */
+    background: -webkit-linear-gradient(to bottom right, rgba(227, 242, 253, 1), rgba(255, 235, 238, 1));
+    background: linear-gradient(to bottom right, rgba(227, 242, 253, 1), rgba(255, 235, 238, 1));
     font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
-
+.container {
+    max-width: 100%; /* Osigurajte da kontejner zauzima punu širinu */
+    padding: 0;
+    height: 100%; /* Osiguranje da zauzima cijelu visinu */
+}
 /* Navbar */
 .navbar {
-    background-color: #007bff;
+    background-color: #adc8e6; /* Klasična plava boja */
+    padding: 0.5rem 1rem; /* Dodaj malo paddinga za bolji izgled */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lagana sjena ispod nav trake */
 }
 
 .navbar-brand, .nav-link {
-    color: #000000 !important;
+    color: #ffffff !important;
 }
 
 .navbar-brand:hover, .nav-link:hover {
-    color: #d4d4d4 !important;
+    color: #007bff !important; /* Svijetlo siva za hover efekat */
+}
+.navbar-nav .nav-item {
+    margin-left: 1rem; /* Dodaj razmak između stavki izbornika */
 }
 
-/* Survey container */
-.survey-container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 800px; /* Maksimalna širina */
-    margin: 0 auto; /* Centriranje */
+/* Aktivni link */
+.nav-item.active .nav-link {
+    color: #e0e0e0 !important;
+    font-weight: bold; /* Podebljaj aktivni link */
 }
 
-/* Naslov ankete */
-.survey-container h2 {
-    color: #343a40;
+/* Dodaj stilizaciju za mobilne uređaje */
+@media (max-width: 767.98px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 0;
+        margin-bottom: 0.5rem; /* Razmak između stavki izbornika na mobilnim uređajima */
+    }
 }
 
-/* Form elementi */
-.form-group {
-    margin-bottom: 1.5rem;
-}
 
-.form-check-label, .form-control {
-    font-size: 1rem;
+.container {
+    flex: 1; /* Održavanje da se sadržaj proteže kroz cijelu visinu stranice */
+}
+/* Gradient za pozadinu registracije */
+.gradient-custom {
+    background:  #e3f2fd; /* Svijetlo plava pozadina */
+    background: -webkit-linear-gradient(to bottom right, rgba(227, 242, 253, 1), rgba(255, 235, 238, 1));
+    background: linear-gradient(to bottom right, rgba(227, 242, 253, 1), rgba(255, 235, 238, 1));
+    min-height: 100vh;
+
+    display: flex;  /* Koristi flexbox za centriranje sadržaja */
+    align-items: center; /* Vertikalno centriranje */
+    justify-content: center; /* Horizontalno centriranje */
+    padding: 20px; /* Dodatni razmak od ruba ekrana */
     
 }
-.form-group div div{ 
-    color: #343a40;
-    display: inline-block;
-    margin: auto;
-    margin-left: 10px;
-}
-.asteriskField{
-    color: #ffffff;
-}
-/* Povećanje veličine inputa i labela */
-.form-check-input {
-    margin-right: 10px;
-    vertical-align: middle;
+
+
+/* Stilizacija kartica i obrazaca */
+.card-registration {
+    border-radius: 15px;
+    background-color: #ffffff; /* Bijela pozadina za kartice */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lagana sjena za kartice */
+    max-width: 90%;
+    width: 100%; /* Osiguranje da kartica bude manja od roditeljskog elementa */
+    max-width: 500px; /* Smanjena maksimalna širina kartice */
+    margin: 0 auto 50px; /* Centriranje kartice i dodavanje donje margine */
+    padding: 15px; /* Dodavanje paddinga unutar kartice */
+    
 }
 
-/* Horizontalni radio buttoni */
-.horizontal-radio ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.card-body {
+    padding: 20px; /* Veće marginiranje za udobnost */
 }
 
-.horizontal-radio li {
-    display: inline-block;
-    margin-right: 10px;
+.form-outline {
+    margin-bottom: 1rem;
 }
 
-/* Stilizacija gumba */
+.form-control {
+    border-radius: 0.25rem; /* Zaobljeni rubovi */
+    border-color: #ced4da; /* Svijetlo siva boja granice */
+}
+
+.form-label {
+    color: #495057; /* Tamno siva boja za tekst oznaka */
+}
+
 .btn-primary {
-    background-color: #007bff;
+    background-color: #007bff; /* Klasična plava boja za gumbe */
     border: none;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
+    color: #ffffff;
+    padding: 8px 16px;
+    font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Tamnija plava za hover efekat */
 }
 
-/* Footer */
-.footer {
-    background-color: #007bff;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+/* Stilizacija checkboxa i radio buttona */
+
+.form-check-label {
+    font-size: 1rem;
+    color: #495057; /* Tamno siva boja za oznake */
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.form-label {
+    display: block;
+    font-size: 1rem;
+    color: #495057; /* Tamno siva boja za oznake */
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%; /* Osiguranje da input zauzima cijelu širinu */
+    height: auto; /* Da se inputi prilagode visini sadržaja */
+    padding: 10px; /* Dodatni prostor unutar inputa */
+}
+/*usk*/
+#id_gender {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#id_gender div {
+    margin-right: 10px; /* Prilagodi razmak između opcija po potrebi */
+}
+
+/* Stilizacija za anketu */
+.survey-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.survey-container h2 {
+    color: #007bff; /* Plava boja za naslove anketa */
+}
+.asteriskField {
+    display: none;
+}
+#id_therapy_0, #id_smoking_0, #id_alcohol_0, 
+#id_heartburn_0, #id_chest_pain_0, #id_dysphagia_0, 
+#id_h_pylori_0, #id_nsaids_0, #id_abdominal_pain_0, 
+#id_nausea_vomiting_0, #id_postprandial_pain_0, #id_diarrhea_0, 
+#id_cramps_0, #id_fatigue_anemia_0, #id_urgency_0, #id_weight_loss_0, #id_stress_0 , #id_appetite_loss_0/* Sakriva sam radio input */{
+    display: none;
+}
+label[for="id_therapy_0"], label[for="id_smoking_0"], label[for="id_alcohol_0"], 
+label[for="id_heartburn_0"], label[for="id_chest_pain_0"], label[for="id_dysphagia_0"], 
+label[for="id_h_pylori_0"], label[for="id_nsaids_0"], label[for="id_abdominal_pain_0"], 
+label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[for="id_diarrhea_0"],
+ label[for="id_cramps_0"], label[for="id_fatigue_anemia_0"], label[for="id_urgency_0"], label[for="id_weight_loss_0"], label[for="id_stress_0"], label[for="id_appetite_loss_0"] /* Sakriva label za taj input */ {
+    display: none;
+}
+.form-group {
+    margin-bottom: 0.5rem; /* Adjust as needed for spacing between questions */
+}
+
+.form-check {
+    display: inline-block;
+    margin-right: 1rem /* Adjust spacing between radio buttons as needed */
+}
+
+/* Stilizacija kartica */
+.card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px; /* Razmak između kartica */
+}
+
+.card-header {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 15px;
+}
+
+/* Modal stilske prilagodbe */
+.modal-content {
+    border-radius: 10px;
+    padding: 15px;
+}
+
+/* Poboljšanje stila chatboxa */
+.chatbox {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    max-width: 100%;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+}
+
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.sent-message {
+    background-color: #d1ecf1;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.received-message {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.chat-input form {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input button {
+    margin-left: 10px;
 }

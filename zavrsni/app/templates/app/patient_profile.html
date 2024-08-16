@@ -1,124 +1,147 @@
-{# templates/app/patient_profile.html #}
-{% extends "base.html" %}
+{% extends "app/base.html" %}
 
 {% block title %}Profil pacijenta{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <div class="col-md-4">
-            <h2>Podaci o pacijentu</h2>
-            <dl class="row">
-                <dt class="col-sm-4">Ime:</dt>
-                <dd class="col-sm-8">{{ patient.name }}</dd>
-                <dt class="col-sm-4">Korisničko ime:</dt>
-                <dd class="col-sm-8">{{ patient.user.username }}</dd>
-                <dt class="col-sm-4">Email:</dt>
-                <dd class="col-sm-8">{{ patient.user.email }}</dd>
-            </dl>
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Podaci o pacijentu</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Ime:</dt>
+                        <dd class="col-sm-8">{{ patient.user.first_name }}</dd>
+                        <dt class="col-sm-4">Prezime:</dt>
+                        <dd class="col-sm-8">{{ patient.user.last_name }}</dd>
+                        <dt class="col-sm-4">Korisničko ime:</dt>
+                        <dd class="col-sm-8">{{ patient.user.username }}</dd>
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">{{ patient.user.email }}</dd>
+                        <dt class="col-sm-4">Datum rođenja:</dt>
+                        <dd class="col-sm-8">{{ patient.dateOfBirth|date:"d.m.Y" }}</dd>
+                        <dt class="col-sm-4">Spol:</dt>
+                        <dd class="col-sm-8">{{ patient.gender }}</dd>
+                    </dl>
+                </div>
+            </div>
         </div>
         <div class="col-md-8">
-            <h2>Prethodne ankete</h2>
-            {% if survey_responses %}
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Datum</th>
-                            <th>Preporuka</th>
-                            <th>Detalji</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for response in survey_responses %}
-                            <tr>
-                                <td>{{ response.date }}</td>
-                                <td>
-                                    <!-- Pretpostavljam da imate funkciju za generiranje preporuka -->
-                                    {{ generate_recommendation(response) }}
-                                </td>
-                                <td>
-                                    <!-- Gumb za prikaz detalja ankete -->
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#surveyModal{{ response.id }}">
-                                        Prikaži
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Modal za detalje ankete -->
-                            <div class="modal fade" id="surveyModal{{ response.id }}" tabindex="-1" role="dialog" aria-labelledby="surveyModalLabel{{ response.id }}" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="surveyModalLabel{{ response.id }}">Detalji ankete - {{ response.date }}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Prethodne ankete</h5>
+                </div>
+                <div class="card-body">
+                    {% if survey_responses %}
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Preporuka</th>
+                                    <th>Detalji</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for response in survey_responses %}
+                                    <tr>
+                                        <td>{{ response.date|date:"d.m.Y" }}</td>
+                                        <td class="text-center text-danger">{{ response.recommendation }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#surveyModal{{ response.id }}">
+                                                Prikaži
                                             </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <dl class="row">
-                                                <dt class="col-sm-4">Terapija:</dt>
-                                                <dd class="col-sm-8">{{ response.get_therapy_display }}</dd>
-                                                <dt class="col-sm-4">Dob:</dt>
-                                                <dd class="col-sm-8">{{ response.age }}</dd>
-                                                <dt class="col-sm-4">Spol:</dt>
-                                                <dd class="col-sm-8">{{ response.get_gender_display }}</dd>
-                                                <dt class="col-sm-4">Pušenje:</dt>
-                                                <dd class="col-sm-8">{{ response.get_smoking_display }}</dd>
-                                                <dt class="col-sm-4">Alkohol:</dt>
-                                                <dd class="col-sm-8">{{ response.get_alcohol_display }}</dd>
-                                                <dt class="col-sm-4">Žgaravica:</dt>
-                                                <dd class="col-sm-8">{{ response.get_heartburn_display }}</dd>
-                                                <dt class="col-sm-4">Bol u prsima:</dt>
-                                                <dd class="col-sm-8">{{ response.get_chest_pain_display }}</dd>
-                                                <dt class="col-sm-4">Disfagija:</dt>
-                                                <dd class="col-sm-8">{{ response.get_dysphagia_display }}</dd>
-                                                <dt class="col-sm-4">Helicobacter pylori:</dt>
-                                                <dd class="col-sm-8">{{ response.get_h_pylori_display }}</dd>
-                                                <dt class="col-sm-4">NSAIDs:</dt>
-                                                <dd class="col-sm-8">{{ response.get_nsaids_display }}</dd>
-                                                <dt class="col-sm-4">Bolovi u trbuhu:</dt>
-                                                <dd class="col-sm-8">{{ response.get_abdominal_pain_display }}</dd>
-                                                <dt class="col-sm-4">Mučnina:</dt>
-                                                <dd class="col-sm-8">{{ response.get_nausea_vomiting_display }}</dd>
-                                                <dt class="col-sm-4">Bol nakon jela:</dt>
-                                                <dd class="col-sm-8">{{ response.get_postprandial_pain_display }}</dd>
-                                                <dt class="col-sm-4">Proljev:</dt>
-                                                <dd class="col-sm-8">{{ response.get_diarrhea_display }}</dd>
-                                                <dt class="col-sm-4">Grčevi:</dt>
-                                                <dd class="col-sm-8">{{ response.get_cramps_display }}</dd>
-                                                <dt class="col-sm-4">Umor:</dt>
-                                                <dd class="col-sm-8">{{ response.get_fatigue_anemia_display }}</dd>
-                                                <dt class="col-sm-4">Hitnost odlaska na WC:</dt>
-                                                <dd class="col-sm-8">{{ response.get_urgency_display }}</dd>
-                                                <dt class="col-sm-4">Gubitak težine:</dt>
-                                                <dd class="col-sm-8">{{ response.get_weight_loss_display }}</dd>
-                                                <dt class="col-sm-4">Stres:</dt>
-                                                <dd class="col-sm-8">{{ response.get_stress_display }}</dd>
-                                                <dt class="col-sm-4">Gubitak apetita:</dt>
-                                                <dd class="col-sm-8">{{ response.get_appetite_loss_display }}</dd>
-                                            </dl>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal za detalje ankete -->
+                                    <div class="modal fade" id="surveyModal{{ response.id }}" tabindex="-1" role="dialog" aria-labelledby="surveyModalLabel{{ response.id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="surveyModalLabel{{ response.id }}">Detalji ankete - {{ response.date }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="row">
+                                                        <dt class="col-sm-4">Terapija:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_therapy_display }}</dd>
+                                                        <dt class="col-sm-4">Pušenje:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_smoking_display }}</dd>
+                                                        <dt class="col-sm-4">Alkohol:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_alcohol_display }}</dd>
+                                                        <dt class="col-sm-4">Žgaravica:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_heartburn_display }}</dd>
+                                                        <dt class="col-sm-4">Bol u prsima:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_chest_pain_display }}</dd>
+                                                        <dt class="col-sm-4">Disfagija:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_dysphagia_display }}</dd>
+                                                        <dt class="col-sm-4">Helicobacter pylori:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_h_pylori_display }}</dd>
+                                                        <dt class="col-sm-4">NSAIDs:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_nsaids_display }}</dd>
+                                                        <dt class="col-sm-4">Bolovi u trbuhu:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_abdominal_pain_display }}</dd>
+                                                        <dt class="col-sm-4">Mučnina:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_nausea_vomiting_display }}</dd>
+                                                        <dt class="col-sm-4">Bol nakon jela:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_postprandial_pain_display }}</dd>
+                                                        <dt class="col-sm-4">Proljev:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_diarrhea_display }}</dd>
+                                                        <dt class="col-sm-4">Grčevi:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_cramps_display }}</dd>
+                                                        <dt class="col-sm-4">Umor:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_fatigue_anemia_display }}</dd>
+                                                        <dt class="col-sm-4">Hitnost odlaska na WC:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_urgency_display }}</dd>
+                                                        <dt class="col-sm-4">Gubitak težine:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_weight_loss_display }}</dd>
+                                                        <dt class="col-sm-4">Stres:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_stress_display }}</dd>
+                                                        <dt class="col-sm-4">Gubitak apetita:</dt>
+                                                        <dd class="col-sm-8">{{ response.get_appetite_loss_display }}</dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nema ispunjenih anketa.</p>
+                    {% endif %}
+                </div>
+            </div>
 
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <p>Nema ispunjenih anketa.</p>
-            {% endif %}
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">Poruke</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chatbox">
+                        <div class="chat-messages mb-3">
+                            {% for message in messages %}
+                                <div class="{% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
+                                    <p>{{ message.content }}</p>
+                                    <small><em>{{ message.timestamp|date:"d.m.Y H:i" }} - Poslao: dr. {{ message.sender.first_name}} {{ message.sender.last_name}}</em></small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_head %}
-    <!-- Bootstrap CSS i JS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div class="text-center mt-4">
+    <img src="data:image/png;base64,{{ graph }}" alt="Rezultati ankete grafikon">
+</div>
 {% endblock %}

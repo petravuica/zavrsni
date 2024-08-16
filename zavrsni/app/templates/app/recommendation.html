@@ -4,7 +4,13 @@
 {% block content %}
   <div class="container mt-5 recommendation-container">
     <h2 class="text-center mb-4">Vaša preporuka</h2>
-    <p class="text-center">{{ recommendation }}</p>
+  <!---<p class="text-center">{{ recommendation }}</p> -->
+  <ul class="list-group text-center">
+    {% for recommendation in recommendations %}
+      <li class="list-group-item">{{ recommendation }}</li>
+    {% endfor %}
+  </ul>
+  
     <div class="text-center mt-4">
       <a href="{% url 'home' %}" class="btn btn-primary">Povratak na početnu stranicu</a>
     </div>

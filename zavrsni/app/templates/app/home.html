@@ -2,5 +2,33 @@
 {% load static %} 
 
 {% block content %}
-    <h1>Home</h1>
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Dobrodošli u GastroHealth</h1>
+        <p class="lead">Vaš pouzdani partner u praćenju i upravljanju zdravljem probavnog sustava.</p>
+        <hr class="my-4">
+        <p>Naša web aplikacija omogućuje pacijentima i liječnicima jednostavan pristup alatima za procjenu rizika, praćenje tijeka bolesti i dobivanje personaliziranih preporuka za poboljšanje zdravlja probavnog sustava.</p>
+        {% if not user.is_authenticated %}
+            <a class="btn btn-primary btn-lg mr-2" href="{% url 'register' %}" role="button">Registracija</a>
+            <a class="btn btn-secondary btn-lg" href="{% url 'login' %}" role="button">Prijava</a>
+        {% else %}
+            <a class="btn btn-primary btn-lg" href="{% url 'survey' %}" role="button">Popuni Anketu</a>
+        {% endif %}
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <h3>Procjena Rizika</h3>
+            <p>Popunite anketu kako biste saznali svoj rizik obolijevanja od bolesti probavnog sustava. Naša aplikacija analizira vaše odgovore i pruža vam detaljne rezultate.</p>
+        </div>
+        <div class="col-md-4">
+            <h3>Praćenje Tijekа Bolesti</h3>
+            <p>Pratite svoje zdravstveno stanje kroz vremensku domenu. Pregledajte povijest svojih simptoma, terapija i napretka na jednom mjestu.</p>
+        </div>
+        <div class="col-md-4">
+            <h3>Personalizirane Preporuke</h3>
+            <p>Dobijte preporuke prilagođene vašem zdravstvenom stanju. Saznajte kako prilagoditi svoj način života i prehranu za bolje zdravlje probavnog sustava.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
