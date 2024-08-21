@@ -193,6 +193,8 @@ label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[fo
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px; /* Razmak između kartica */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
 .card-header {
@@ -244,4 +246,46 @@ label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[fo
 
 .chat-input button {
     margin-left: 10px;
+}
+
+/* Tabela anketa */
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
+    padding: 12px;
+}
+
+.table th {
+    background-color: #e3f2fd;
+}
+
+/* Dugmad u tabeli */
+.btn-info {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-info:hover {
+    background-color: #0056b3;
+}
+
+/* Modal stilizacija */
+/*
+.modal-content {
+    border-radius: 10px;
+    padding: 15px;
+}
+#patient-card-info{
+    margin-left: 20px;
+    margin-right: 950px;
+}
+#patient-card {
+    margin: 20px;
+}
+*/
+#cijeli-sadrzaj {
+    padding: 20px;
 }

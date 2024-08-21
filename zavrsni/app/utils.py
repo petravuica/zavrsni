@@ -10,124 +10,124 @@ VALUE_MAP = {
 }
 DISEASE_SYMPTOM_WEIGHTS = {
     'GERB': {
-        'therapy': 1.0,
-        'smoking': 0.3,
-        'alcohol': 0.3,
-        'heartburn': 5.0,
-        'chest_pain': 4.0,
-        'dysphagia': 4.0,
+        'therapy': 0.5,
+        'smoking': 0.2,
+        'alcohol': 0.2,
+        'heartburn': 6.0,
+        'chest_pain': 5.0,
+        'dysphagia': 5.0,
         'h_pylori': 0.0,
-        'nsaids': 0.3,
+        'nsaids': 0.2,
         'abdominal_pain': 1.0,
         'nausea_vomiting': 1.0,
         'postprandial_pain': 0.5,
-        'diarrhea': 0.2,
-        'cramps': 0.5,
-        'fatigue_anemia': 0.5,
-        'urgency': 0.2,
-        'weight_loss': 0.2,
+        'diarrhea': 0.1,
+        'cramps': 0.3,
+        'fatigue_anemia': 0.4,
+        'urgency': 0.1,
+        'weight_loss': 0.1,
         'stress': 1.0,
-        'appetite_loss': 0.5,
+        'appetite_loss': 0.4,
     },
     'Gastritis': {
-        'therapy': 1.0,
-        'smoking': 1.4,
-        'alcohol': 1.3,
-        'heartburn': 1.5,
-        'chest_pain': 1.0,
-        'dysphagia': 0.5,
-        'h_pylori': 2.3,
-        'nsaids': 2.0,
-        'abdominal_pain': 3.0,
-        'nausea_vomiting': 2.0,
-        'postprandial_pain': 1.2,
-        'diarrhea': 0.8,
-        'cramps': 0.8,
-        'fatigue_anemia': 0.8,
-        'urgency': 0.3,
-        'weight_loss': 0.5,
-        'stress': 1.0,
-        'appetite_loss': 2.0,
-    },
-    'Dispepsija': {
-        'therapy': 1.0,
-        'smoking': 1.3,
-        'alcohol': 1.2,
-        'heartburn': 0.5,
-        'chest_pain': 1.0,
-        'dysphagia': 0.5,
-        'h_pylori': 0.0,
-        'nsaids': 1.9,
-        'abdominal_pain': 2.5,
-        'nausea_vomiting': 1.5,
-        'postprandial_pain': 2.5,
-        'diarrhea': 1.0,
-        'cramps': 1.0,
-        'fatigue_anemia': 0.8,
-        'urgency': 0.5,
-        'weight_loss': 0.5,
-        'stress': 2.0,
-        'appetite_loss': 1.2,
-    },
-    'Crohnova_bolest': {
-        'therapy': 1.0,
-        'smoking': 1.6,
-        'alcohol': 1.3,
-        'heartburn': 0.3,
-        'chest_pain': 0.3,
-        'dysphagia': 0.2,
-        'h_pylori': 0.1,
-        'nsaids': 0.4,
-        'abdominal_pain': 2.5,
-        'nausea_vomiting': 1.5,
-        'postprandial_pain': 1.2,
-        'diarrhea': 2.2,
-        'cramps': 2.4,
-        'fatigue_anemia': 2.0,
-        'urgency': 1.2,
-        'weight_loss': 2.0,
-        'stress': 1.0,
-        'appetite_loss': 2.2,
-    },
-    'IBS': {
-        'therapy': 1.0,
+        'therapy': 0.7,
         'smoking': 1.2,
         'alcohol': 1.1,
-        'heartburn': 0.8,
-        'chest_pain': 0.6,
+        'heartburn': 1.3,
+        'chest_pain': 0.9,
         'dysphagia': 0.4,
-        'h_pylori': 0.3,
-        'nsaids': 0.5,
-        'abdominal_pain': 2.2,
-        'nausea_vomiting': 1.2,
-        'postprandial_pain': 1.3,
-        'diarrhea': 1.5,
-        'cramps': 2.0,
-        'fatigue_anemia': 0.7,
-        'urgency': 1.2,
-        'weight_loss': 0.8,
-        'stress': 1.3,
-        'appetite_loss': 0.7,
+        'h_pylori': 2.5,
+        'nsaids': 2.2,
+        'abdominal_pain': 3.5,
+        'nausea_vomiting': 2.3,
+        'postprandial_pain': 1.4,
+        'diarrhea': 0.7,
+        'cramps': 0.6,
+        'fatigue_anemia': 0.5,
+        'urgency': 0.2,
+        'weight_loss': 0.4,
+        'stress': 0.8,
+        'appetite_loss': 2.2,
     },
-    'Celijakija': {
-        'therapy': 1.0,
-        'smoking': 1.1,
-        'alcohol': 1.1,
+    'Dispepsija': {
+        'therapy': 0.7,
+        'smoking': 1.2,
+        'alcohol': 1.0,
         'heartburn': 0.5,
+        'chest_pain': 0.8,
+        'dysphagia': 0.3,
+        'h_pylori': 0.0,
+        'nsaids': 1.8,
+        'abdominal_pain': 3.0,
+        'nausea_vomiting': 2.0,
+        'postprandial_pain': 2.8,
+        'diarrhea': 0.9,
+        'cramps': 1.0,
+        'fatigue_anemia': 0.7,
+        'urgency': 0.3,
+        'weight_loss': 0.4,
+        'stress': 1.5,
+        'appetite_loss': 1.5,
+    },
+    'Crohnova_bolest': {
+        'therapy': 0.8,
+        'smoking': 1.7,
+        'alcohol': 1.4,
+        'heartburn': 0.3,
         'chest_pain': 0.4,
         'dysphagia': 0.3,
-        'h_pylori': 0.2,
-        'nsaids': 0.3,
-        'abdominal_pain': 2.0,
-        'nausea_vomiting': 1.8,
+        'h_pylori': 0.1,
+        'nsaids': 0.4,
+        'abdominal_pain': 2.7,
+        'nausea_vomiting': 1.6,
+        'postprandial_pain': 1.3,
+        'diarrhea': 2.4,
+        'cramps': 2.6,
+        'fatigue_anemia': 2.2,
+        'urgency': 1.3,
+        'weight_loss': 2.3,
+        'stress': 1.1,
+        'appetite_loss': 2.4,
+    },
+    'IBS': {
+        'therapy': 0.8,
+        'smoking': 1.3,
+        'alcohol': 1.2,
+        'heartburn': 0.8,
+        'chest_pain': 0.7,
+        'dysphagia': 0.5,
+        'h_pylori': 0.4,
+        'nsaids': 0.6,
+        'abdominal_pain': 2.5,
+        'nausea_vomiting': 1.3,
         'postprandial_pain': 1.4,
-        'diarrhea': 2.5,
-        'cramps': 1.8,
-        'fatigue_anemia': 2.0,
-        'urgency': 1.5,
-        'weight_loss': 2.0,
-        'stress': 1.2,
-        'appetite_loss': 2.0,
+        'diarrhea': 1.6,
+        'cramps': 2.2,
+        'fatigue_anemia': 0.9,
+        'urgency': 1.3,
+        'weight_loss': 0.9,
+        'stress': 1.5,
+        'appetite_loss': 0.8,
+    },
+    'Celijakija': {
+        'therapy': 0.8,
+        'smoking': 1.2,
+        'alcohol': 1.2,
+        'heartburn': 0.6,
+        'chest_pain': 0.5,
+        'dysphagia': 0.4,
+        'h_pylori': 0.3,
+        'nsaids': 0.4,
+        'abdominal_pain': 2.3,
+        'nausea_vomiting': 2.0,
+        'postprandial_pain': 1.6,
+        'diarrhea': 2.8,
+        'cramps': 2.0,
+        'fatigue_anemia': 2.2,
+        'urgency': 1.6,
+        'weight_loss': 2.4,
+        'stress': 1.3,
+        'appetite_loss': 2.3,
     }
 }
 
@@ -160,17 +160,43 @@ def logistic_regression(z):
     return 1 / (1 + math.exp(-z))
 
 def calculate_probability(disease_weights, values):
-    z = sum(disease_weights[symptom] * values[symptom] for symptom in values)
-    # Regularizacija - podijelimo s brojem simptoma
-    z /= len(values)  # Ovo smanjuje ukupni zbroj i sprječava ekstremne vrijednosti
+
+    z = sum(disease_weights[symptom] * values[symptom] for symptom in values) 
+    z-=55.0
+    z /= len(values)  # Ovo smanjuje ukupni zbroj i sprječava ekstremne vrijednosti, dijeli se s brojem simptoma
     
     return logistic_regression(z)
-
+#za svaku bolest računa vjerojatnost
 def generate_probabilities(values):
     probabilities = {}
     for disease, weights in DISEASE_SYMPTOM_WEIGHTS.items():
         probabilities[disease] = calculate_probability(weights, values)
     return probabilities
+
+
+
+def generate_top_n_recommendations(survey_response, n=3):
+    values = map_answers_to_values(survey_response)
+    probabilities = generate_probabilities(values)
+    
+    sorted_diseases = sorted(probabilities, key=probabilities.get, reverse=True)
+    
+    # Pronađi najvišu vjerojatnost
+    highest_probability = probabilities[sorted_diseases[0]]
+    urgency_recommendation = generate_disease_recommendation(highest_probability)
+    
+    
+    # Generiraj top n preporuka
+    recommendations = [urgency_recommendation]
+    for disease in sorted_diseases[:n]:
+        probability = probabilities[disease]
+        disease_recommendations = get_recommendations_for_condition(disease)
+        recommendations.append(f"{disease} s vjerojatnošću {probability:.4f}.")
+        recommendations.extend(disease_recommendations)
+    
+    return recommendations
+
+
 
 def generate_recommendation(survey_response):
     values = map_answers_to_values(survey_response)
@@ -184,16 +210,102 @@ def generate_recommendation(survey_response):
     
     return recommendation
 
-def generate_top_n_recommendations(survey_response, n=3):
+def generate_disease_recommendation(probability):
+    if probability >= 0.8:  # Visoka vjerojatnost -> hitna preporuka
+        return "Preporučujemo da hitno posjetite liječnika."
+    elif probability >= 0.4:  # Srednja vjerojatnost -> savjetovanje s liječnikom
+        return "Bilo bi dobro da svoje stanje provjerite s liječnikom."
+    else:  # Niska vjerojatnost -> nije potreban posjet liječniku
+        return "Za sada ne morate posjetiti liječnika."
+
+def get_recommendations_for_condition(condition):
+    recommendations = {
+        'GERB': [
+            "Izbjegavajte masnu i začinjenu hranu.",
+            "Jedite manje obroke češće umjesto velikih obroka.",
+            "Izbjegavajte ležanje odmah nakon jela.",
+            "Prestanite pušiti i ograničite unos alkohola."
+        ],
+        'Gastritis': [
+            "Izbjegavajte alkohol i začinjenu hranu.",
+            "Jedite manje obroke tijekom dana.",
+            "Uzmite lijekove koje vam liječnik preporuči, uključujući antibiotike ako je gastritis uzrokovan bakterijom Helicobacter pylori.",
+            "Prestanite pušiti."
+        ],
+        'Dispepsija': [
+            "Izbjegavajte masnu i tešku hranu.",
+            "Ograničite unos alkohola, kave i gaziranih pića.",
+            "Jedite redovito i izbjegavajte prejedanje.",
+            "Povećajte unos vlakana u prehrani."
+        ],
+        'Crohnova bolest': [
+            "Jedite pet manjih obroka tijekom dana.",
+            "Smanjite unos masne i pržene hrane.",
+            "Izbjegavajte mlijeko i mliječne prerađevine, kao i vlaknaste namirnice.",
+            "Pijte puno tekućine i izbjegavajte alkohol i gazirana pića."
+        ],
+        'IBS': [
+            "Izbjegavajte hranu koja uzrokuje nadutost, kao što su grah i kupus.",
+            "Smanjite unos kave i alkohola.",
+            "Uvedite redovite obroke i jedite polako.",
+            "Razmislite o promjeni prehrane prema FODMAP prehrani."
+        ],
+        'Celijakija': [
+            "Potpuno izbjegavajte gluten u prehrani.",
+            "Pažljivo pročitajte etikete na prehrambenim proizvodima.",
+            "Koristite alternativne žitarice poput riže, kukuruza i kvinoje.",
+            "Pratite svoj nutritivni status i konzultirajte se s dijetetičarom."
+        ]
+    }
+    return recommendations.get(condition, [])
+
+"""
+# Funkcija za izračun logističke funkcije
+def sigmoid(z):
+    return 1 / (1 + math.exp(-z))
+
+# Funkcija za izračun preporuke pomoću logističke regresije
+def calculate_recommendation_logistic(survey_response):
+    # Pretvorba tekstualnih odgovora u numeričke vrijednosti
     values = map_answers_to_values(survey_response)
-    probabilities = generate_probabilities(values)
     
-    sorted_diseases = sorted(probabilities, key=probabilities.get, reverse=True)
+    # Ručno definirane težine (w_i) i presretnica (w_0)
+    weights = {
+        'therapy': 0.2,
+        'smoking': 0.5,
+        'alcohol': 0.3,
+        'heartburn': 0.4,
+        'chest_pain': 0.6,
+        'dysphagia': 0.7,
+        'h_pylori': 0.4,
+        'nsaids': 0.3,
+        'abdominal_pain': 0.5,
+        'nausea_vomiting': 0.6,
+        'postprandial_pain': 0.4,
+        'diarrhea': 0.3,
+        'cramps': 0.5,
+        'fatigue_anemia': 0.6,
+        'urgency': 0.4,
+        'weight_loss': 0.7,
+        'stress': 0.2,
+        'appetite_loss': 0.5
+    }
     
-    # Generiraj top n preporuka
-    recommendations = []
-    for disease in sorted_diseases[:n]:
-        probability = probabilities[disease]
-        recommendations.append(f"Preporučena bolest: {disease} s vjerojatnošću {probability:.4f}")
+    # Presretnica
+    intercept = -3.0
     
-    return recommendations
+    # Izračunavanje z = w_0 + w_1*x_1 + w_2*x_2 + ... + w_n*x_n
+    z = intercept + sum(weights[field] * value for field, value in values.items())
+    
+    # Izračunavanje vjerojatnosti pomoću sigmoid funkcije
+    probability = sigmoid(z)
+    
+    # Pragovi za preporuke
+    if probability >= 0.7:  # Visoka vjerojatnost -> hitna preporuka
+        return "Preporučujemo da hitno posjetite liječnika."
+    elif probability >= 0.4:  # Srednja vjerojatnost -> savjetovanje s liječnikom
+        return "Bilo bi dobro da svoje stanje provjerite s liječnikom."
+    else:  # Niska vjerojatnost -> nije potreban posjet liječniku
+        return "Za sada ne morate posjetiti liječnika."
+    
+        """

@@ -1,16 +1,15 @@
 {% extends "app/base.html" %}
-
-{% block title %}Profil pacijenta{% endblock %}
+{% block title %}Detalji pacijenta{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4" id="cijeli-sadrzaj">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="card-title mb-0">Podaci o pacijentu</h5>
-                </div>
+        <!-- Lijeva strana - Detalji pacijenta i poruke -->
+        <div class="col-md-5">
+            <!-- Kartica sa osnovnim informacijama o pacijentu -->
+            <div class="card shadow-sm mb-4" id="patient-card-info">
                 <div class="card-body">
+                    <h2 class="text-primary">Detalji pacijenta</h2>
                     <dl class="row">
                         <dt class="col-sm-4">Ime:</dt>
                         <dd class="col-sm-8">{{ patient.user.first_name }}</dd>
@@ -27,15 +26,32 @@
                     </dl>
                 </div>
             </div>
-        </div>
-        <div class="col-md-8">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
-                    <h5 class="card-title mb-0">Prethodne ankete</h5>
-                </div>
+
+            <!-- Kartica sa porukama -->
+            <div class="card shadow-sm" id="patient-card">
                 <div class="card-body">
+                    <h3 class="text-primary">Poruke</h3>
+                    <div class="chatbox">
+                        <div class="chat-messages mb-3">
+                            {% for message in messages %}
+                                <div class="{% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
+                                    <p>{{ message.content }}</p>
+                                    <small><em>{{ message.timestamp|date:"d.m.Y H:i" }} - Poslao: dr. {{ message.sender.first_name}} {{ message.sender.last_name}}</em></small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desna strana - Prethodne ankete -->
+        <div class="col-md-7">
+            <div class="card shadow-sm" id="patient-card">
+                <div class="card-body">
+                    <h3 class="text-primary">Prethodne ankete</h3>
                     {% if survey_responses %}
-                        <table class="table table-hover">
+                        <table class="table table-bordered mt-3">
                             <thead class="thead-light">
                                 <tr>
                                     <th>Datum</th>
@@ -47,26 +63,26 @@
                                 {% for response in survey_responses %}
                                     <tr>
                                         <td>{{ response.date|date:"d.m.Y" }}</td>
-                                        <td class="text-center text-danger">{{ response.recommendation }}</td>
+                                        <td>{{ response.recommendation }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#surveyModal{{ response.id }}">
                                                 Prikaži
                                             </button>
                                         </td>
                                     </tr>
-
                                     <!-- Modal za detalje ankete -->
                                     <div class="modal fade" id="surveyModal{{ response.id }}" tabindex="-1" role="dialog" aria-labelledby="surveyModalLabel{{ response.id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="surveyModalLabel{{ response.id }}">Detalji ankete - {{ response.date }}</h5>
+                                                    <h5 class="modal-title" id="surveyModalLabel{{ response.id }}">Detalji ankete - {{ response.date|date:"d.m.Y" }}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <dl class="row">
+                                                        <!-- Ispis detalja ankete -->
                                                         <dt class="col-sm-4">Terapija:</dt>
                                                         <dd class="col-sm-8">{{ response.get_therapy_display }}</dd>
                                                         <dt class="col-sm-4">Pušenje:</dt>
@@ -106,7 +122,7 @@
                                                     </dl>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Zatvori</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,33 +131,11 @@
                             </tbody>
                         </table>
                     {% else %}
-                        <p>Nema ispunjenih anketa.</p>
+                        <p>Nema dostupnih anketa.</p>
                     {% endif %}
-                </div>
-            </div>
-
-            <div class="card shadow-sm">
-                <div class="card-header bg-info text-white">
-                    <h5 class="card-title mb-0">Poruke</h5>
-                </div>
-                <div class="card-body">
-                    <div class="chatbox">
-                        <div class="chat-messages mb-3">
-                            {% for message in messages %}
-                                <div class="{% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
-                                    <p>{{ message.content }}</p>
-                                    <small><em>{{ message.timestamp|date:"d.m.Y H:i" }} - Poslao: dr. {{ message.sender.first_name}} {{ message.sender.last_name}}</em></small>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="text-center mt-4">
-    <img src="data:image/png;base64,{{ graph }}" alt="Rezultati ankete grafikon">
 </div>
 {% endblock %}

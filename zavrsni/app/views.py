@@ -4,12 +4,15 @@ from .forms import RegistrationForm, SurveyForm, MessageForm
 from .models import Patient, Doctor, SurveyResponse, Message
 from django.contrib.auth import login
 from django.http import HttpResponseRedirect, HttpResponse
-from .utils import generate_probabilities, generate_top_n_recommendations, map_answers_to_values, generate_recommendation
+from .utils import DISEASE_SYMPTOM_WEIGHTS, generate_probabilities, generate_recommendation, generate_top_n_recommendations, get_recommendations_for_condition, map_answers_to_values
 from django.contrib.auth.decorators import login_required, user_passes_test
-import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 # Create your views here.
+import matplotlib
+matplotlib.use('Agg')  # Koristi backend koji ne zahtijeva GUI
+import matplotlib.pyplot as plt
+
 
 def home(request):
     return render(request, 'app/home.html')
@@ -59,7 +62,7 @@ def SurveyView(request):
             recommendations = generate_top_n_recommendations(survey_response, n=3)
 
             
-            survey_response.recommendation = recommendations
+            survey_response.recommendation = '\n'.join(recommendations)
             survey_response.save()
 
             return render(request, 'app/recommendation.html', {
@@ -102,14 +105,13 @@ def patient_profile(request):
     else:
         form = MessageForm()
     
-    graph = plot_survey_results(survey_responses)
+    
     context = {
         'patient': patient,
         'survey_responses': survey_responses,
         'recommendations': recommendations,
         'messages': messages,
-        'form': form,
-        'graph': graph
+        'form': form
         
     }
 
@@ -161,29 +163,40 @@ def PatientDetail(request, patient_id):
 
     return render(request, 'app/patient_detail.html', context)
 
-def plot_survey_results(survey_responses):
-    # Ovde možete prilagoditi podatke iz anketa koje želite prikazati na grafu
-    dates = [response.date for response in survey_responses]
-    heartburn_data = [response.heartburn for response in survey_responses]
+def plot_survey_results(request):
+    # Dohvati sve ankete za trenutnog korisnika
+    survey_responses = SurveyResponse.objects.filter(user=request.user).order_by('date')
 
-    plt.figure(figsize=(10, 5))
-    plt.plot(dates, heartburn_data, marker='o', color='b', label='Heartburn')
-    
-    # Dodaj više linija ako želiš pratiti više odgovora
+    # Ako nema anketa, vrati praznu sliku
+    if not survey_responses:
+        return HttpResponse("No survey responses available.")
+
+    # Pripremi podatke za dijagram
+    dates = [response.date for response in survey_responses]
+    probabilities = {disease: [] for disease in DISEASE_SYMPTOM_WEIGHTS.keys()}
+
+    for response in survey_responses:
+        values = map_answers_to_values(response)
+        probs = generate_probabilities(values)
+        for disease in probabilities:
+            probabilities[disease].append(probs[disease])
+
+    # Stvaranje linijskog dijagrama
+    plt.figure(figsize=(10, 6))
+    for disease, probs in probabilities.items():
+        plt.plot(dates, probs, label=disease)
+
     plt.xlabel('Datum')
-    plt.ylabel('Rezultat')
-    plt.title('Praćenje rezultata ankete kroz vrijeme')
+    plt.ylabel('Vjerojatnost')
+    plt.title('Vjerojatnosti bolesti kroz vrijeme')
     plt.legend()
     plt.grid(True)
 
-    # Spremaj grafiku u memorijski buffer
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    buffer.seek(0)
-    
-    # Enkodiraj grafiku u base64 format kako bi je mogli prikazati u HTML-u
-    image_png = buffer.getvalue()
-    graph = base64.b64encode(image_png).decode('utf-8')
-    buffer.close()
-    plt.close('all')
-    return graph
+    # Spremi dijagram u memoriju kao sliku
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    img_str = base64.b64encode(buf.getvalue()).decode('utf-8')
+    buf.close()
+
+    return render(request, 'app/survey_results.html', {'image': img_str})
