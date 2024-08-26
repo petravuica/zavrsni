@@ -38,25 +38,8 @@ class RegistrationForm(UserCreationForm):
 class SurveyForm(forms.ModelForm): 
     class Meta:
         model = SurveyResponse
-        fields = [
-            'therapy',
-            'smoking',
-            'alcohol',
-            'heartburn',
-            'chest_pain',
-            'dysphagia',
-            'h_pylori',
-            'nsaids',
-            'abdominal_pain',
-            'nausea_vomiting',
-            'postprandial_pain',
-            'diarrhea',
-            'cramps',
-            'fatigue_anemia',
-            'urgency',
-            'weight_loss',
-            'stress',
-            'appetite_loss'
+        fields = ['therapy', 'smoking', 'alcohol', 'heartburn', 'chest_pain', 'dysphagia', 'h_pylori', 'nsaids', 'abdominal_pain', 'nausea_vomiting',
+            'postprandial_pain', 'diarrhea', 'cramps', 'fatigue_anemia', 'urgency', 'weight_loss', 'stress','appetite_loss'
         ]
         widgets = {
             'therapy': forms.RadioSelect,
@@ -78,7 +61,6 @@ class SurveyForm(forms.ModelForm):
             'stress': forms.RadioSelect,
             'appetite_loss': forms.RadioSelect,
         }
-
         labels = {
             'therapy': 'Primate li terapiju?',
             'smoking': 'Konzumirate li cigarete?',
@@ -104,6 +86,7 @@ class SurveyForm(forms.ModelForm):
             for field_name, field in self.fields.items():
                 if isinstance(field.widget, forms.RadioSelect):
                     field.empty_label = None
+    
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message

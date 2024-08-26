@@ -17,28 +17,24 @@
                     <!-- Prikaz najvjerojatnijih bolesti s vjerojatnostima -->
                     <h4 class="mb-3">Najvjerojatnije dijagnoze:</h4>
                     <ul class="list-group list-group-flush">
-                        {% for recommendation in recommendations|slice:"1:" %}
-                        {% if 'vjerojatnošću' in recommendation %}
+                        {% for disease in top_diseases %}
                         <li class="list-group-item">
                             <i class="bi bi-chevron-right text-primary"></i> 
-                            {{ recommendation }}
+                            {{ disease }}
                         </li>
-                        {% endif %}
                         {% endfor %}
                     </ul>
 
                     <hr class="my-4">
 
-                    <!-- Prikaz preporuka za bolesti -->
+                    <!-- Prikaz preporuka za najvjerojatniju bolest -->
                     <h4 class="mb-3">Preporuke:</h4>
                     <ul class="list-group list-group-flush">
                         {% for recommendation in recommendations|slice:"1:" %}
-                        {% if 'vjerojatnošću' not in recommendation %}
                         <li class="list-group-item">
                             <i class="bi bi-chevron-right text-primary"></i> 
                             {{ recommendation }}
                         </li>
-                        {% endif %}
                         {% endfor %}
                     </ul>
 

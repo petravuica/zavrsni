@@ -160,43 +160,18 @@ def logistic_regression(z):
     return 1 / (1 + math.exp(-z))
 
 def calculate_probability(disease_weights, values):
-
     z = sum(disease_weights[symptom] * values[symptom] for symptom in values) 
     z-=55.0
     z /= len(values)  # Ovo smanjuje ukupni zbroj i sprječava ekstremne vrijednosti, dijeli se s brojem simptoma
     
     return logistic_regression(z)
+
 #za svaku bolest računa vjerojatnost
 def generate_probabilities(values):
     probabilities = {}
     for disease, weights in DISEASE_SYMPTOM_WEIGHTS.items():
         probabilities[disease] = calculate_probability(weights, values)
     return probabilities
-
-
-
-def generate_top_n_recommendations(survey_response, n=3):
-    values = map_answers_to_values(survey_response)
-    probabilities = generate_probabilities(values)
-    
-    sorted_diseases = sorted(probabilities, key=probabilities.get, reverse=True)
-    
-    # Pronađi najvišu vjerojatnost
-    highest_probability = probabilities[sorted_diseases[0]]
-    urgency_recommendation = generate_disease_recommendation(highest_probability)
-    
-    
-    # Generiraj top n preporuka
-    recommendations = [urgency_recommendation]
-    for disease in sorted_diseases[:n]:
-        probability = probabilities[disease]
-        disease_recommendations = get_recommendations_for_condition(disease)
-        recommendations.append(f"{disease} s vjerojatnošću {probability:.4f}.")
-        recommendations.extend(disease_recommendations)
-    
-    return recommendations
-
-
 
 def generate_recommendation(survey_response):
     values = map_answers_to_values(survey_response)
@@ -211,12 +186,37 @@ def generate_recommendation(survey_response):
     return recommendation
 
 def generate_disease_recommendation(probability):
-    if probability >= 0.8:  # Visoka vjerojatnost -> hitna preporuka
+    if probability >= 0.8:  
         return "Preporučujemo da hitno posjetite liječnika."
-    elif probability >= 0.4:  # Srednja vjerojatnost -> savjetovanje s liječnikom
+    elif probability >= 0.4:  
         return "Bilo bi dobro da svoje stanje provjerite s liječnikom."
-    else:  # Niska vjerojatnost -> nije potreban posjet liječniku
+    else:  
         return "Za sada ne morate posjetiti liječnika."
+
+def generate_top_n_recommendations(survey_response, n=3):
+    values = map_answers_to_values(survey_response)
+    probabilities = generate_probabilities(values)
+    
+    # Sortiraj bolesti prema vjerojatnosti u opadajućem redoslijedu
+    sorted_diseases = sorted(probabilities, key=probabilities.get, reverse=True)
+    
+    # Pronađi najvišu vjerojatnost
+    highest_probability_disease = sorted_diseases[0]
+    highest_probability = probabilities[highest_probability_disease]
+    
+    # Generiraj preporuku za najvjerojatniju bolest
+    urgency_recommendation = generate_disease_recommendation(highest_probability)
+    
+    # Pripremi ispis za najvjerojatnije bolesti
+    top_diseases = [f"{disease} s vjerojatnošću {probabilities[disease]:.4f}." for disease in sorted_diseases[:n]]
+    
+    # Dodaj preporuke samo za najvjerojatniju bolest
+    recommendations = [urgency_recommendation]
+    recommendations.append(f"Najvjerojatnija bolest: {highest_probability_disease} s vjerojatnošču {highest_probability:.4f}.")
+    recommendations.extend(get_recommendations_for_condition(highest_probability_disease))
+   
+
+    return recommendations, top_diseases
 
 def get_recommendations_for_condition(condition):
     recommendations = {
@@ -259,53 +259,3 @@ def get_recommendations_for_condition(condition):
     }
     return recommendations.get(condition, [])
 
-"""
-# Funkcija za izračun logističke funkcije
-def sigmoid(z):
-    return 1 / (1 + math.exp(-z))
-
-# Funkcija za izračun preporuke pomoću logističke regresije
-def calculate_recommendation_logistic(survey_response):
-    # Pretvorba tekstualnih odgovora u numeričke vrijednosti
-    values = map_answers_to_values(survey_response)
-    
-    # Ručno definirane težine (w_i) i presretnica (w_0)
-    weights = {
-        'therapy': 0.2,
-        'smoking': 0.5,
-        'alcohol': 0.3,
-        'heartburn': 0.4,
-        'chest_pain': 0.6,
-        'dysphagia': 0.7,
-        'h_pylori': 0.4,
-        'nsaids': 0.3,
-        'abdominal_pain': 0.5,
-        'nausea_vomiting': 0.6,
-        'postprandial_pain': 0.4,
-        'diarrhea': 0.3,
-        'cramps': 0.5,
-        'fatigue_anemia': 0.6,
-        'urgency': 0.4,
-        'weight_loss': 0.7,
-        'stress': 0.2,
-        'appetite_loss': 0.5
-    }
-    
-    # Presretnica
-    intercept = -3.0
-    
-    # Izračunavanje z = w_0 + w_1*x_1 + w_2*x_2 + ... + w_n*x_n
-    z = intercept + sum(weights[field] * value for field, value in values.items())
-    
-    # Izračunavanje vjerojatnosti pomoću sigmoid funkcije
-    probability = sigmoid(z)
-    
-    # Pragovi za preporuke
-    if probability >= 0.7:  # Visoka vjerojatnost -> hitna preporuka
-        return "Preporučujemo da hitno posjetite liječnika."
-    elif probability >= 0.4:  # Srednja vjerojatnost -> savjetovanje s liječnikom
-        return "Bilo bi dobro da svoje stanje provjerite s liječnikom."
-    else:  # Niska vjerojatnost -> nije potreban posjet liječniku
-        return "Za sada ne morate posjetiti liječnika."
-    
-        """

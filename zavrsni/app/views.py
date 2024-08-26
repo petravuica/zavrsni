@@ -19,7 +19,7 @@ def home(request):
 
 def RegisterView(request):
     context = {}
-    
+ 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -50,6 +50,7 @@ def RegisterView(request):
     context['form'] = form
     return render(request, 'registration/register.html', context)
 
+
 def SurveyView(request):
     if request.method == 'POST':
         form = SurveyForm(request.POST)
@@ -58,15 +59,15 @@ def SurveyView(request):
             survey_response.user = request.user
 
             survey_response.save()
-            # Generiraj top 3 preporuke
-            recommendations = generate_top_n_recommendations(survey_response, n=3)
+            # Generiraj preporuke i popis najvjerojatnijih bolesti
+            recommendations, top_diseases = generate_top_n_recommendations(survey_response, n=3)
 
-            
             survey_response.recommendation = '\n'.join(recommendations)
             survey_response.save()
 
             return render(request, 'app/recommendation.html', {
-                'recommendations': recommendations,   
+                'recommendations': recommendations,
+                'top_diseases': top_diseases,
             })
             
     else:
@@ -124,7 +125,7 @@ def is_doctor(user):
 user_passes_test(is_doctor)
 @login_required
 def patient_list(request):
-    patients = Patient.objects.all().order_by('name')
+    patients = Patient.objects.all().order_by('user__last_name', 'name')
     return render(request, 'app/patient_list.html', {'patients': patients})
 
 @user_passes_test(is_doctor)
