@@ -26,7 +26,30 @@
                     </dl>
                 </div>
             </div>
-
+            {% if user_type == 'doctor' %}
+    <div class="card shadow-sm" id="patient-card">
+        <div class="card-body">
+            <h3 class="text-primary">Poruke</h3>
+            <div class="chatbox">
+                <div class="chat-messages">
+                    {% for message in messages %}
+                        <div class="{% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
+                            <p>{{ message.content }}</p>
+                            <small><em>{{ message.timestamp|date:"d.m.Y H:i" }}</em></small>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="chat-input mt-3">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Pošalji</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+            {% else %}
             <!-- Kartica sa porukama -->
             <div class="card shadow-sm" id="patient-card">
                 <div class="card-body">
@@ -44,12 +67,12 @@
                 </div>
             </div>
         </div>
-
+        {% endif %}
         <!-- Desna strana - Prethodne ankete -->
         <div class="col-md-7">
             <div class="card shadow-sm" id="patient-card">
                 <div class="card-body">
-                    <h3 class="text-primary">Prethodne ankete</h3>
+                    <h3 class="text-primary">Prethodni upitnici</h3>
                     {% if survey_responses %}
                         <table class="table table-bordered mt-3">
                             <thead class="thead-light">
@@ -83,8 +106,7 @@
                                                 <div class="modal-body">
                                                     <dl class="row">
                                                         <!-- Ispis detalja ankete -->
-                                                        <dt class="col-sm-4">Terapija:</dt>
-                                                        <dd class="col-sm-8">{{ response.get_therapy_display }}</dd>
+                                                        
                                                         <dt class="col-sm-4">Pušenje:</dt>
                                                         <dd class="col-sm-8">{{ response.get_smoking_display }}</dd>
                                                         <dt class="col-sm-4">Alkohol:</dt>
@@ -135,6 +157,14 @@
                     {% endif %}
                 </div>
             </div>
+            {% if image %}
+            <div class="card shadow-sm mt-4" id="patient-graph-card">
+                <div class="card-body">
+                    <h3 class="text-primary">Vjerojatnosti bolesti kroz vrijeme</h3>
+                    <img src="data:image/png;base64,{{ image }}" alt="Survey Results" class="img-fluid mt-3">
+                </div>
+            </div>
+        {% endif %}
         </div>
     </div>
 </div>

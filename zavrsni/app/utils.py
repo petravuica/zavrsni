@@ -8,9 +8,9 @@ VALUE_MAP = {
     'Da': 5,
     'Ne': 0,
 }
+
 DISEASE_SYMPTOM_WEIGHTS = {
     'GERB': {
-        'therapy': 0.5,
         'smoking': 0.2,
         'alcohol': 0.2,
         'heartburn': 6.0,
@@ -30,7 +30,6 @@ DISEASE_SYMPTOM_WEIGHTS = {
         'appetite_loss': 0.4,
     },
     'Gastritis': {
-        'therapy': 0.7,
         'smoking': 1.2,
         'alcohol': 1.1,
         'heartburn': 1.3,
@@ -50,7 +49,6 @@ DISEASE_SYMPTOM_WEIGHTS = {
         'appetite_loss': 2.2,
     },
     'Dispepsija': {
-        'therapy': 0.7,
         'smoking': 1.2,
         'alcohol': 1.0,
         'heartburn': 0.5,
@@ -69,8 +67,7 @@ DISEASE_SYMPTOM_WEIGHTS = {
         'stress': 1.5,
         'appetite_loss': 1.5,
     },
-    'Crohnova_bolest': {
-        'therapy': 0.8,
+    'Crohnova bolest': {
         'smoking': 1.7,
         'alcohol': 1.4,
         'heartburn': 0.3,
@@ -90,7 +87,6 @@ DISEASE_SYMPTOM_WEIGHTS = {
         'appetite_loss': 2.4,
     },
     'IBS': {
-        'therapy': 0.8,
         'smoking': 1.3,
         'alcohol': 1.2,
         'heartburn': 0.8,
@@ -110,7 +106,6 @@ DISEASE_SYMPTOM_WEIGHTS = {
         'appetite_loss': 0.8,
     },
     'Celijakija': {
-        'therapy': 0.8,
         'smoking': 1.2,
         'alcohol': 1.2,
         'heartburn': 0.6,
@@ -133,7 +128,6 @@ DISEASE_SYMPTOM_WEIGHTS = {
 
 def map_answers_to_values(survey_response):
     values = {
-        'therapy': VALUE_MAP.get(survey_response.therapy, 0),
         'smoking': VALUE_MAP.get(survey_response.smoking, 0),
         'alcohol': VALUE_MAP.get(survey_response.alcohol, 0),
         'heartburn': VALUE_MAP.get(survey_response.heartburn, 0),
@@ -197,20 +191,15 @@ def generate_top_n_recommendations(survey_response, n=3):
     values = map_answers_to_values(survey_response)
     probabilities = generate_probabilities(values)
     
-    # Sortiraj bolesti prema vjerojatnosti u opadajućem redoslijedu
     sorted_diseases = sorted(probabilities, key=probabilities.get, reverse=True)
-    
-    # Pronađi najvišu vjerojatnost
+
     highest_probability_disease = sorted_diseases[0]
     highest_probability = probabilities[highest_probability_disease]
-    
-    # Generiraj preporuku za najvjerojatniju bolest
+
     urgency_recommendation = generate_disease_recommendation(highest_probability)
     
-    # Pripremi ispis za najvjerojatnije bolesti
     top_diseases = [f"{disease} s vjerojatnošću {probabilities[disease]:.4f}." for disease in sorted_diseases[:n]]
     
-    # Dodaj preporuke samo za najvjerojatniju bolest
     recommendations = [urgency_recommendation]
     recommendations.append(f"Najvjerojatnija bolest: {highest_probability_disease} s vjerojatnošču {highest_probability:.4f}.")
     recommendations.extend(get_recommendations_for_condition(highest_probability_disease))
@@ -224,29 +213,24 @@ def get_recommendations_for_condition(condition):
             "Izbjegavajte masnu i začinjenu hranu.",
             "Jedite manje obroke češće umjesto velikih obroka.",
             "Izbjegavajte ležanje odmah nakon jela.",
-            "Prestanite pušiti i ograničite unos alkohola."
         ],
         'Gastritis': [
-            "Izbjegavajte alkohol i začinjenu hranu.",
+            "Izbjegavajte začinjenu hranu.",
             "Jedite manje obroke tijekom dana.",
             "Uzmite lijekove koje vam liječnik preporuči, uključujući antibiotike ako je gastritis uzrokovan bakterijom Helicobacter pylori.",
-            "Prestanite pušiti."
         ],
         'Dispepsija': [
-            "Izbjegavajte masnu i tešku hranu.",
-            "Ograničite unos alkohola, kave i gaziranih pića.",
+            "Izbjegavajte masnu i tešku hranu, ograničite unos alkohola, kave i gaziranih pića.",
             "Jedite redovito i izbjegavajte prejedanje.",
             "Povećajte unos vlakana u prehrani."
         ],
         'Crohnova bolest': [
-            "Jedite pet manjih obroka tijekom dana.",
-            "Smanjite unos masne i pržene hrane.",
+            "Jedite pet manjih obroka tijekom dana, smanjite unos masne i pržene hrane.",
             "Izbjegavajte mlijeko i mliječne prerađevine, kao i vlaknaste namirnice.",
             "Pijte puno tekućine i izbjegavajte alkohol i gazirana pića."
         ],
         'IBS': [
             "Izbjegavajte hranu koja uzrokuje nadutost, kao što su grah i kupus.",
-            "Smanjite unos kave i alkohola.",
             "Uvedite redovite obroke i jedite polako.",
             "Razmislite o promjeni prehrane prema FODMAP prehrani."
         ],

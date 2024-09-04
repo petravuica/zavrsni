@@ -12,7 +12,7 @@ class RegistrationForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Confirm password'}))
     gender = forms.ChoiceField(choices=[('M', 'Muški'), ('F', 'Ženski') ], widget=forms.RadioSelect)
-    dateOfBirth = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
+    dateOfBirth = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': 'Datum rođenja'}))
     isDoctor = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-check-input', }), required=False)
 
     class Meta:
@@ -38,11 +38,10 @@ class RegistrationForm(UserCreationForm):
 class SurveyForm(forms.ModelForm): 
     class Meta:
         model = SurveyResponse
-        fields = ['therapy', 'smoking', 'alcohol', 'heartburn', 'chest_pain', 'dysphagia', 'h_pylori', 'nsaids', 'abdominal_pain', 'nausea_vomiting',
+        fields = ['smoking', 'alcohol', 'heartburn', 'chest_pain', 'dysphagia', 'h_pylori', 'nsaids', 'abdominal_pain', 'nausea_vomiting',
             'postprandial_pain', 'diarrhea', 'cramps', 'fatigue_anemia', 'urgency', 'weight_loss', 'stress','appetite_loss'
         ]
         widgets = {
-            'therapy': forms.RadioSelect,
             'smoking': forms.RadioSelect,
             'alcohol': forms.RadioSelect,
             'heartburn': forms.RadioSelect,
@@ -62,7 +61,6 @@ class SurveyForm(forms.ModelForm):
             'appetite_loss': forms.RadioSelect,
         }
         labels = {
-            'therapy': 'Primate li terapiju?',
             'smoking': 'Konzumirate li cigarete?',
             'alcohol': 'Konzumirate li alkohol?',
             'heartburn': 'Imate li osjećaj žgaravice (osjećaj vraćanja kisele tekućine u grlo ili usta)?',

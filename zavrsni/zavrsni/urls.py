@@ -29,7 +29,6 @@ urlpatterns = [
     path('patient_profile/', views.patient_profile, name='patient_profile'),
     path('patients/', views.patient_list, name='patient_list'),
     path('patients/<int:patient_id>/', views.PatientDetail, name='patient_detail'),
-    path('survey-results/', views.plot_survey_results, name='survey_results'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
    
     

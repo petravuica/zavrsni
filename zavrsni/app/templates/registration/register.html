@@ -17,15 +17,15 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_firstName">Ime:</label>
-                    <input type="text" id="id_firstName" class="form-control form-control-lg" name="{{ form.firstName.name }}" value="{{ form.firstName.value|default_if_none:'' }}" />
+                    <!-- <label class="form-label" for="id_firstName">Ime:</label>-->
+                    <input type="text" id="id_firstName" class="form-control form-control-lg" name="{{ form.firstName.name }}" value="{{ form.firstName.value|default_if_none:'' }}" placeholder="Ime" style="height: 45px"/>
                     {{ form.firstName.errors }}
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_lastName">Prezime:</label>
-                    <input type="text" id="id_lastName" class="form-control form-control-lg" name="{{ form.lastName.name }}" value="{{ form.lastName.value|default_if_none:'' }}" />
+                    <!-- <label class="form-label" for="id_lastName">Prezime:</label>-->
+                    <input type="text" id="id_lastName" class="form-control form-control-lg" name="{{ form.lastName.name }}" value="{{ form.lastName.value|default_if_none:'' }}" placeholder="Prezime" style="height: 45px"/>
                     {{ form.lastName.errors }}
                   </div>
                 </div>
@@ -34,15 +34,15 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_username">Korisničko ime:</label>
-                    <input type="text" id="id_username" class="form-control form-control-lg" name="{{ form.username.name }}" value="{{ form.username.value|default_if_none:'' }}" />
+                  <!-- <label class="form-label" for="id_username">Korisničko ime:</label> -->
+                    <input type="text" id="id_username" class="form-control form-control-lg" name="{{ form.username.name }}" value="{{ form.username.value|default_if_none:'' }}" placeholder="Korisničko ime" style="height: 45px"/>
                     {{ form.username.errors }}
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_email">Email:</label>
-                    <input type="email" id="id_email" class="form-control form-control-lg" name="{{ form.email.name }}" value="{{ form.email.value|default_if_none:'' }}" />
+                    <!-- <label class="form-label" for="id_email">Email:</label> -->
+                    <input type="email" id="id_email" class="form-control form-control-lg" name="{{ form.email.name }}" value="{{ form.email.value|default_if_none:'' }}" placeholder="Email" style="height: 45px"/>
                     {{ form.email.errors }}
                   </div>
                 </div>
@@ -51,15 +51,15 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_password1">Lozinka:</label>
-                    <input type="password" id="id_password1" class="form-control form-control-lg" name="{{ form.password1.name }}" />
+                    <!-- <label class="form-label" for="id_password1">Lozinka:</label> -->
+                    <input type="password" id="id_password1" class="form-control form-control-lg" name="{{ form.password1.name }}" placeholder="Lozinka" style="height: 45px"/>
                     {{ form.password1.errors }}
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_password2">Ponovi lozinku:</label>
-                    <input type="password" id="id_password2" class="form-control form-control-lg" name="{{ form.password2.name }}" />
+                    <!-- <label class="form-label" for="id_password2">Ponovi lozinku:</label> -->
+                    <input type="password" id="id_password2" class="form-control form-control-lg" name="{{ form.password2.name }}" placeholder="Ponovi lozinku" style="height: 45px"/>
                     {{ form.password2.errors }}
                   </div>
                 </div>
@@ -68,22 +68,39 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="id_date_of_birth">Datum rođenja:</label>
-                    <input type="date" id="id_date_of_birth" class="form-control form-control-lg" name="{{ form.dateOfBirth.name }}" value="{{ form.dateOfBirth.value|default_if_none:'' }}" />
+                    <!-- <label class="form-label" for="id_date_of_birth">Datum rođenja:</label>-->
+                    <input type="date" id="id_date_of_birth" class="form-control form-control-lg date-input" name="{{ form.dateOfBirth.name }}" value="{{ form.dateOfBirth.value|default_if_none:'' }}"  style="height: 45px"/>
                     {{ form.dateOfBirth.errors }}
                   </div>
                 </div>
+                <!--
                 <div class="col-md-6 mb-4">
                   <h6 class="mb-2 pb-1">Spol: </h6>
                   {{ form.gender }}
                   {{ form.gender.errors }}
                   
                 </div>
+              -->
+              <div class="col-md-6 mb-4">
+                <h6 class="mb-2 pb-1">Spol: </h6>
+                <div id="id_gender" style="margin-top: 0px;"><div>
+  <label for="id_gender_0"><input type="radio" name="gender" value="M" required="" id="id_gender_0">
+Muški</label>
+
+</div><div>
+  <label for="id_gender_1"><input type="radio" name="gender" value="F" required="" id="id_gender_1">
+Ženski</label>
+
+</div>
+</div>
+                
+                
+              </div>
               </div>
 
               <div class="form-group form-check">
                 <label class="form-check-label" for="id_isDoctor">
-                  <input type="checkbox" id="id_isDoctor" class="form-check-input" name="{{ form.isDoctor.name }}" {% if form.isDoctor.value %}checked{% endif %} /> Jeste li liječnik?
+                  <input type="checkbox" id="id_isDoctor" class="form-check-input"  name="{{ form.isDoctor.name }}" {% if form.isDoctor.value %}checked{% endif %} /> Jeste li liječnik?
                 </label>
                 {{ form.isDoctor.errors }}
               </div>

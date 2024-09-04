@@ -106,13 +106,41 @@ def patient_profile(request):
     else:
         form = MessageForm()
     
-    
+    if survey_responses.exists():
+        dates = [response.date for response in survey_responses]
+        probabilities = {disease: [] for disease in DISEASE_SYMPTOM_WEIGHTS.keys()}
+
+        for response in survey_responses:
+            values = map_answers_to_values(response)
+            probs = generate_probabilities(values)
+            for disease in probabilities:
+                probabilities[disease].append(probs[disease])
+
+        plt.figure(figsize=(10, 6))
+        for disease, probs in probabilities.items():
+            plt.plot(dates, probs, label=disease)
+
+        plt.xlabel('Datum')
+        plt.ylabel('Vjerojatnost')
+        plt.title('Vjerojatnosti bolesti kroz vrijeme')
+        plt.legend()
+        plt.grid(True)
+
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        img_str = base64.b64encode(buf.getvalue()).decode('utf-8')
+        buf.close()
+    else:
+        img_str = None
+
     context = {
         'patient': patient,
         'survey_responses': survey_responses,
         'recommendations': recommendations,
         'messages': messages,
-        'form': form
+        'form': form,
+        'image': img_str
         
     }
 
@@ -139,8 +167,7 @@ def PatientDetail(request, patient_id):
         recommendation = generate_recommendation(response)
         recommendations[response.id] = recommendation
     
-    # Prikupiti sve poruke između liječnika i pacijenta
-    messages = Message.objects.filter(sender=request.user, recipient=patient.user) | Message.objects.filter(sender=patient.user, recipient=request.user)
+    messages = Message.objects.filter(sender=request.user, recipient=patient.user) 
     messages = messages.order_by('timestamp')
     
     if request.method == 'POST':
@@ -153,13 +180,42 @@ def PatientDetail(request, patient_id):
             return redirect('patient_detail', patient_id=patient_id)
     else:
         form = MessageForm()
-    
+
+    if survey_responses.exists():
+        dates = [response.date for response in survey_responses]
+        probabilities = {disease: [] for disease in DISEASE_SYMPTOM_WEIGHTS.keys()}
+
+        for response in survey_responses:
+            values = map_answers_to_values(response)
+            probs = generate_probabilities(values)
+            for disease in probabilities:
+                probabilities[disease].append(probs[disease])
+
+        plt.figure(figsize=(10, 6))
+        for disease, probs in probabilities.items():
+            plt.plot(dates, probs, label=disease)
+
+        plt.xlabel('Datum')
+        plt.ylabel('Vjerojatnost')
+        plt.title('Vjerojatnosti bolesti kroz vrijeme')
+        plt.legend()
+        plt.grid(True)
+
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        img_str = base64.b64encode(buf.getvalue()).decode('utf-8')
+        buf.close()
+    else:
+        img_str = None
+
     context = {
         'patient': patient,
         'survey_responses': survey_responses,
         'recommendations': recommendations,
         'form': form,
         'messages': messages,
+        'image': img_str,
     }
 
     return render(request, 'app/patient_detail.html', context)

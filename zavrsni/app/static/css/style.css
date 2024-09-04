@@ -211,24 +211,29 @@ label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[fo
 /* Poboljšanje stila chatboxa */
 .chatbox {
     border: 1px solid #e0e0e0;
-    padding: 10px;
+    padding: 15px; /* Veći padding za bolji izgled */
     max-width: 100%;
     margin-top: 20px;
-    background-color: #f9f9f9;
+    background-color: #ffffff; /* Bijela pozadina za kontrast */
+    border-radius: 10px; /* Zaobljeni rubovi chatboxa */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Dodajte laganu sjenu za bolji izgled */
 }
 
 .chat-messages {
     max-height: 300px;
     overflow-y: auto;
     margin-bottom: 10px;
+    padding: 10px; /* Dodajte padding unutar chat-messages */
+    background-color: #f9f9f9; /* Blago sivkasta pozadina za bolji kontrast */
+    border-radius: 10px; /* Zaobljeni rubovi */
 }
-
 .sent-message {
     background-color: #d1ecf1;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 5px;
     text-align: right;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Dodajte sjenu ispod poslane poruke */
 }
 
 .received-message {
@@ -237,6 +242,7 @@ label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[fo
     border-radius: 10px;
     margin-bottom: 5px;
     text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Dodajte sjenu ispod primljene poruke */
 }
 
 .chat-input form {
@@ -246,8 +252,15 @@ label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[fo
 
 .chat-input button {
     margin-left: 10px;
+    padding: 10px 20px; /* Povećajte padding za bolji izgled */
+    border-radius: 25px; /* Zaobljeni rubovi */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Dodajte sjenu ispod tipke */
 }
 
+.chat-input button:hover {
+    transform: translateY(-2px); /* Lagani pomak prema gore kod hovera */
+    background-color: #0056b3; /* Tamnija plava za hover efekt */
+}
 /* Tabela anketa */
 .table-bordered {
     border: 1px solid #dee2e6;
@@ -288,4 +301,42 @@ label[for="id_nausea_vomiting_0"], label[for="id_postprandial_pain_0"], label[fo
 */
 #cijeli-sadrzaj {
     padding: 20px;
+}
+
+.form-floating {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-floating .form-control {
+    padding: 1rem 0.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    background-color: #ffffff;
+    box-shadow: none;
+    height: calc(1.5em + 0.75rem + 2px); /* Poboljšava visinu kako bi label bio pravilno pozicioniran */
+}
+
+.form-floating label {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0 0.75rem;
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+    color: #6c757d;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    /* Ensure label stays visible */
+    z-index: 1;
+}
+
+.form-floating .form-control:focus ~ label,
+.form-floating .form-control.float ~ label {
+    top: -0.75rem;
+    left: 0.75rem;
+    font-size: 75%;
+    color: #007bff;
+    background-color: #ffffff;
 }
